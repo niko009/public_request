@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data/projects';
+---
+<BaseLayout title="Проекты bacus.dev — .NET, AI и программные продукты" description="Проекты bacus.dev: веб-продукты, .NET-системы, мобильные приложения, AI-интеграции и практическая автоматизация.">
+  <section class="section shell page-intro reveal">
+    <div class="eyebrow" data-en="Projects" data-ru="Проекты">Проекты</div>
+    <h1 data-en="Products, tools and experiments." data-ru="Продукты, инструменты и эксперименты.">Продукты, инструменты и эксперименты.</h1>
+    <p data-en="Each project is built around a real problem, with an emphasis on understandable architecture, useful automation and independent deployment." data-ru="Каждый проект строится вокруг реальной задачи, с упором на понятную архитектуру, полезную автоматизацию и независимый деплой.">Каждый проект строится вокруг реальной задачи, с упором на понятную архитектуру, полезную автоматизацию и независимый деплой.</p>
+  </section>
+  <section class="section shell"><div class="project-grid stagger-grid">{projects.map((project) => <ProjectCard project={project} />)}</div></section>
+</BaseLayout>
