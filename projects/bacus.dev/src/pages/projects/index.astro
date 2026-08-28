@@ -2,12 +2,37 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { projects } from '../../data/projects';
+
+const projectListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Проекты bacus.dev',
+  itemListElement: projects.map((project, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: project.name,
+    url: `https://bacus.dev/projects/${project.slug}/`
+  }))
+};
 ---
-<BaseLayout title="Проекты bacus.dev — .NET, AI и программные продукты" description="Проекты bacus.dev: веб-продукты, .NET-системы, мобильные приложения, AI-интеграции и практическая автоматизация.">
+<BaseLayout
+  title="Проекты bacus.dev — .NET, AI и программные продукты"
+  description="Проекты bacus.dev: веб-продукты, .NET-системы, мобильные приложения, AI-интеграции и практическая автоматизация."
+  schema={projectListSchema}
+>
   <section class="section shell page-intro reveal">
     <div class="eyebrow" data-en="Projects" data-ru="Проекты">Проекты</div>
     <h1 data-en="Products, tools and experiments." data-ru="Продукты, инструменты и эксперименты.">Продукты, инструменты и эксперименты.</h1>
     <p data-en="Each project is built around a real problem, with an emphasis on understandable architecture, useful automation and independent deployment." data-ru="Каждый проект строится вокруг реальной задачи, с упором на понятную архитектуру, полезную автоматизацию и независимый деплой.">Каждый проект строится вокруг реальной задачи, с упором на понятную архитектуру, полезную автоматизацию и независимый деплой.</p>
   </section>
-  <section class="section shell"><div class="project-grid stagger-grid">{projects.map((project) => <ProjectCard project={project} />)}</div></section>
+
+  <section class="section shell" aria-labelledby="projects-list-title">
+    <h2 id="projects-list-title" class="sr-only" data-en="All projects" data-ru="Все проекты">Все проекты</h2>
+    <div class="project-grid stagger-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
 </BaseLayout>
+<style>
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
