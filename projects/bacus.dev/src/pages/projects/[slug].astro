@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { projects } from '../../data/projects';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const statusRu = project.status === 'Active' ? 'Активен' : project.status === 'In development' ? 'В разработке' : 'Прототип';
+---
+<BaseLayout title={`${project.name} — bacus.dev`} description={project.summaryRu} pageType="article">
+  <section class="section shell page-intro project-detail reveal">
+    <nav class="breadcrumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span>/</span><a href="/projects/">Проекты</a><span>/</span><span>{project.name}</span></nav>
+    <div class="eyebrow" data-en={project.status} data-ru={statusRu}>{statusRu}</div>
+    <h1 style={`view-transition-name: project-${project.slug}`}>{project.name}</h1>
+    <p class="project-summary" data-en={project.summaryEn} data-ru={project.summaryRu}>{project.summaryRu}</p>
+    <div class="detail-actions">{project.liveUrl && <a class="button primary" href={project.liveUrl} target="_blank" rel="noreferrer">Открыть проект ↗</a>}{project.githubUrl && <a class="button secondary" href={project.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>}</div>
+  </section>
+  <section class="section shell"><div class="detail-grid"><article class="detail-card"><div class="eyebrow">О проекте</div><p data-en={project.descriptionEn} data-ru={project.descriptionRu}>{project.descriptionRu}</p></article><article class="detail-card"><div class="eyebrow">Технологии</div><div class="tags detail-tags">{project.stack.map((item) => <span>{item}</span>)}</div></article></div></section>
+</BaseLayout>
+<style>.breadcrumbs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;color:var(--muted);font-size:.78rem}.project-summary{max-width:760px}.detail-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.detail-grid{display:grid;grid-template-columns:1.5fr .7fr;gap:18px}.detail-card{border:1px solid var(--line);border-radius:24px;padding:26px;background:var(--panel)}@media(max-width:760px){.detail-grid{grid-template-columns:1fr}}</style>
