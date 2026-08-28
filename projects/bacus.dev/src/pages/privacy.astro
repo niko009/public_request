@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Конфиденциальность — bacus.dev"
+  description="Как bacus.dev обрабатывает технические данные, локальные настройки темы и языка, внешние ссылки и обращения по email."
+>
+  <section class="section shell page-intro privacy-page reveal">
+    <div class="eyebrow" data-en="Privacy" data-ru="Конфиденциальность">Конфиденциальность</div>
+    <h1 data-en="Privacy, without hidden tracking." data-ru="Конфиденциальность без скрытого трекинга.">Конфиденциальность без скрытого трекинга.</h1>
+    <p data-en="This page explains what the bacus.dev website itself stores and what infrastructure providers may process when you open the site." data-ru="Здесь описано, что хранит сам сайт bacus.dev и какие технические данные могут обрабатываться инфраструктурными провайдерами при открытии сайта.">Здесь описано, что хранит сам сайт bacus.dev и какие технические данные могут обрабатываться инфраструктурными провайдерами при открытии сайта.</p>
+  </section>
+
+  <section class="section shell privacy-content">
+    <article>
+      <h2 data-en="Local settings" data-ru="Локальные настройки">Локальные настройки</h2>
+      <p data-en="The site stores only interface preferences such as the selected theme and language in your browser's localStorage. These values stay in the browser and are used only to restore the interface state." data-ru="Сайт сохраняет в localStorage браузера только настройки интерфейса — выбранную тему и язык. Эти значения остаются в браузере и нужны только для восстановления состояния интерфейса.">Сайт сохраняет в localStorage браузера только настройки интерфейса — выбранную тему и язык. Эти значения остаются в браузере и нужны только для восстановления состояния интерфейса.</p>
+    </article>
+
+    <article>
+      <h2 data-en="Cookies and analytics" data-ru="Cookies и аналитика">Cookies и аналитика</h2>
+      <p data-en="The website code does not install advertising or marketing cookies and does not contain a third-party analytics script. If analytics is added later, this page will be updated before such tracking is enabled." data-ru="Код сайта не устанавливает рекламные или маркетинговые cookies и не содержит стороннего аналитического скрипта. Если аналитика будет добавлена позже, эта страница будет обновлена до включения такого трекинга.">Код сайта не устанавливает рекламные или маркетинговые cookies и не содержит стороннего аналитического скрипта. Если аналитика будет добавлена позже, эта страница будет обновлена до включения такого трекинга.</p>
+    </article>
+
+    <article>
+      <h2 data-en="Infrastructure data" data-ru="Технические данные инфраструктуры">Технические данные инфраструктуры</h2>
+      <p data-en="Network and hosting providers may process normal request metadata needed to deliver and protect the site, such as IP address, request time, browser information and requested URL. bacus.dev uses Cloudflare in front of the site." data-ru="Сетевые и хостинговые провайдеры могут обрабатывать обычные технические данные запросов, необходимые для доставки и защиты сайта: IP-адрес, время запроса, сведения о браузере и запрошенный URL. Перед сайтом используется Cloudflare.">Сетевые и хостинговые провайдеры могут обрабатывать обычные технические данные запросов, необходимые для доставки и защиты сайта: IP-адрес, время запроса, сведения о браузере и запрошенный URL. Перед сайтом используется Cloudflare.</p>
+    </article>
+
+    <article>
+      <h2 data-en="External links" data-ru="Внешние ссылки">Внешние ссылки</h2>
+      <p data-en="Project pages may link to GitHub and separate project domains. Once you follow an external link, that service's own privacy rules apply." data-ru="На страницах проектов есть ссылки на GitHub и отдельные домены продуктов. После перехода по внешней ссылке действуют правила конфиденциальности соответствующего сервиса.">На страницах проектов есть ссылки на GitHub и отдельные домены продуктов. После перехода по внешней ссылке действуют правила конфиденциальности соответствующего сервиса.</p>
+    </article>
+
+    <article>
+      <h2 data-en="Contact" data-ru="Контакт">Контакт</h2>
+      <p data-en="Questions about this page can be sent by email. Messages are processed only to respond to the request and continue the conversation you initiated." data-ru="Вопросы по этой странице можно отправить по email. Письма обрабатываются только для ответа на обращение и продолжения инициированного вами общения.">Вопросы по этой странице можно отправить по email. Письма обрабатываются только для ответа на обращение и продолжения инициированного вами общения.</p>
+      <a class="privacy-email" href="mailto:mihail@bacus.dev">mihail@bacus.dev ↗</a>
+    </article>
+
+    <p class="privacy-updated" data-en="Last updated: August 19, 2026" data-ru="Обновлено: 19 августа 2026">Обновлено: 19 августа 2026</p>
+  </section>
+</BaseLayout>
+<style>
+  .privacy-page{max-width:920px}
+  .privacy-content{max-width:920px;padding-top:12px}
+  .privacy-content article{padding:28px 0;border-top:1px solid var(--line)}
+  .privacy-content h2{font-size:clamp(1.45rem,3vw,2.1rem);margin-bottom:12px}
+  .privacy-content p{margin:0;max-width:800px}
+  .privacy-email{display:inline-block;margin-top:14px;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+  .privacy-updated{padding-top:26px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+</style>

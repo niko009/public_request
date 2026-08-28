@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Страница не найдена — bacus.dev" description="Запрошенная страница не найдена.">
+  <section class="section shell page-intro error-page">
+    <div class="eyebrow">Ошибка 404</div>
+    <h1>Этой страницы нет.</h1>
+    <p>Возможно, адрес изменился или в ссылке есть ошибка. Вернитесь на главную или посмотрите мои проекты.</p>
+    <div class="hero-actions">
+      <a class="button primary" href="/">На главную</a>
+      <a class="button secondary" href="/projects/">Смотреть проекты</a>
+    </div>
+  </section>
+  <style>.error-page{min-height:70vh;display:flex;flex-direction:column;justify-content:center}.error-page p{max-width:650px;font-size:1.1rem}</style>
+</BaseLayout>
