@@ -1,0 +1,12 @@
+---
+const { project } = Astro.props;
+const statusClass = project.status.toLowerCase().replaceAll(' ', '-');
+const statusRu = project.status === 'Active' ? 'Активен' : project.status === 'In development' ? 'В разработке' : 'Прототип';
+---
+<article class={`project-card project-${project.slug}`} data-tilt-card>
+  <div class="project-card-top"><span class={`status ${statusClass}`}>{statusRu}</span><span class="arrow">↗</span></div>
+  <h3><a href={`/projects/${project.slug}/`}>{project.name}</a></h3>
+  <p data-en={project.summaryEn} data-ru={project.summaryRu}>{project.summaryRu}</p>
+  <div class="tags">{project.stack.slice(0,4).map((item) => <span>{item}</span>)}</div>
+  <div class="project-actions"><a class="card-link" href={`/projects/${project.slug}/`}>Подробнее</a>{project.liveUrl && <a class="card-link live-link" href={project.liveUrl} target="_blank" rel="noreferrer">Открыть проект ↗</a>}</div>
+</article>
