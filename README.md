@@ -24,6 +24,7 @@ Examples:
 
 - `bacus-dev/feature/new-project-card`
 - `bacus-dev/fix/mobile-header`
+- `bacus-dev/snapshot/current-site`
 - `nutriguru/feature/meal-planner`
 - `cosmic-fight/fix/battle-ui`
 - `racing-merge/design/new-garage`
@@ -36,6 +37,7 @@ Allowed types:
 - `refactor` — code restructuring without intended behavior change
 - `content` — text/content changes
 - `experiment` — exploratory work that may not be accepted
+- `snapshot` — clean baseline mirror of the current project code
 
 Do not use generic branches such as `test`, `changes`, `update`, `new`, or `grok`.
 
