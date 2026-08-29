@@ -17,22 +17,22 @@ const projectAccents: Record<string, string> = {
 const statusRu = (status: string) => status === 'Active' ? 'live' : status === 'Prototype' ? 'prototype' : 'dev';
 
 const processSteps = [
-  { num: '01', icon: '◇', titleRu: 'Идея', titleEn: 'Idea', textRu: 'Полезная мысль, раздражение или эксперимент.', textEn: 'A useful thought, itch or experiment.' },
-  { num: '02', icon: '✦', titleRu: 'ИИ', titleEn: 'AI', textRu: 'Поиск, варианты, черновики, критика.', textEn: 'Research, options, drafts and critique.' },
-  { num: '03', icon: '</>', titleRu: 'Код', titleEn: 'Code', textRu: 'Интерфейсы, интеграции, тесты.', textEn: 'Interfaces, integrations and tests.' },
-  { num: '04', icon: '↗', titleRu: 'Онлайн', titleEn: 'Online', textRu: 'Docker, CI/CD, домен, реальные пользователи.', textEn: 'Docker, CI/CD, domain and real users.' },
+  { num: '01', icon: '◇', titleRu: 'Идея', titleEn: 'Idea', textRu: 'Зацепка, раздражение или «а что если».', textEn: 'A hook, an itch, or a what-if.' },
+  { num: '02', icon: '✦', titleRu: 'Промпт', titleEn: 'Prompt', textRu: 'Формулирую задачу ИИ: контекст, рамки, результат.', textEn: 'Frame the task for AI: context, constraints, outcome.' },
+  { num: '03', icon: '</>', titleRu: 'Сборка', titleEn: 'Build', textRu: 'Код, правки, деплой. Я направляю и принимаю.', textEn: 'Code, fixes, deploy. I steer and accept.' },
+  { num: '04', icon: '↗', titleRu: 'URL', titleEn: 'URL', textRu: 'Свой адрес. Можно открыть и пользоваться.', textEn: 'Its own URL. Open it and use it.' },
 ];
 
 const techGroups = [
-  { icon: '✦', title: 'AI', items: ['Поиск', 'Код', 'UI', 'Проверка идей', 'Контент', 'Автоматизация'] },
+  { icon: '✦', title: 'AI', items: ['Идеи', 'Код', 'UI', 'Критика', 'Контент', 'Автоматизация'] },
   { icon: '{ }', title: 'Backend', items: ['ASP.NET Core', 'APIs', 'PostgreSQL', 'RabbitMQ', 'MassTransit'] },
   { icon: '↗', title: 'Запуск', items: ['Docker', 'CI/CD', 'Cloudflare', 'Portable hosting'] },
   { icon: '◎', title: 'Движение и веб', items: ['MediaPipe', 'WebRTC', 'PWA', 'React', 'Next.js', 'Android'] },
 ];
 ---
 <BaseLayout
-  title="bacus.dev — продукты, эксперименты и ИИ"
-  description="Личная лаборатория: небольшие продукты, автоматизация, эксперименты с ИИ и новые технологии."
+  title="bacus.dev — идея → ИИ → URL"
+  description="Идеи, которые ИИ собирает и публикует. Можно открыть и пользоваться."
 >
   <div class="upload-home" id="top">
     <div class="lab-background" aria-hidden="true">
@@ -48,23 +48,23 @@ const techGroups = [
     <section class="upload-hero upload-shell noise">
       <div class="hero-pill hero-animate">
         <span class="hero-live-dot"></span>
-        <span>research → prototype → refine</span>
+        <span>idea → ai → url</span>
       </div>
 
-      <h1 class="hero-title" aria-label="Идеи, которые можно открыть в браузере">
-        <span class="word">Идеи,</span>
-        <span class="word">которые</span>
-        <span class="word accent-word">можно открыть</span>
+      <h1 class="hero-title" aria-label="Придумал. Отдал ИИ. Открыл в браузере.">
+        <span class="word">Придумал.</span>
+        <span class="word accent-word">Отдал ИИ.</span>
+        <span class="word">Открыл</span>
         <span class="word">в браузере.</span>
       </h1>
 
       <p class="hero-copy hero-animate">
-        <strong>bacus.dev</strong> — личная лаборатория: небольшие продукты, автоматизация, эксперименты с ИИ. Без громких заявлений — просто то, что интересно собрать и выложить.
+        <strong>bacus.dev</strong> — журнал запусков: идея уходит в ИИ, на выходе появляется то, чем можно пользоваться. Код я понимаю, но основной цикл здесь другой — сформулировать, направить, принять результат.
       </p>
 
       <div class="hero-actions hero-animate">
         <a class="btn-primary" href="#projects">Смотреть проекты <span>↓</span></a>
-        <a class="btn-ghost" href="#lab">Лаборатория</a>
+        <a class="btn-ghost" href="#process">Как это устроено</a>
       </div>
 
       <div class="hero-metrics hero-animate">
@@ -78,9 +78,9 @@ const techGroups = [
 
     <section class="upload-section upload-shell" id="projects">
       <div class="section-heading reveal-item">
-        <span class="section-label">// 01 — проекты</span>
-        <h2>Живые <span>эксперименты.</span></h2>
-        <p>Что-то полезное, что-то странное, что-то пересобирается заново. У каждого эксперимента — свой адрес, который можно открыть прямо сейчас.</p>
+        <span class="section-label">// 01 — запуски</span>
+        <h2>Уже можно <span>открыть.</span></h2>
+        <p>Каждый проект начинался с мысли. Дальше — промпт, сборка, деплой. Что-то полезное, что-то странное — у всего свой URL.</p>
       </div>
 
       <div class="projects-grid">
@@ -103,8 +103,8 @@ const techGroups = [
 
         <a class="project-card all-projects reveal-item" href="/projects/">
           <span class="plus">+</span>
-          <strong>Все проекты</strong>
-          <small>{projects.length} в лаборатории</small>
+          <strong>Все запуски</strong>
+          <small>{projects.length} на сайте</small>
           <span class="all-arrow">↗</span>
         </a>
       </div>
@@ -112,9 +112,9 @@ const techGroups = [
 
     <section class="upload-section upload-shell" id="process">
       <div class="section-heading reveal-item">
-        <span class="section-label">// 02 — процесс</span>
-        <h2>Идея → ИИ → код → <span>онлайн.</span></h2>
-        <p>ИИ ускоряет поиск, черновики, код и дизайн, но самое интересное всё равно остаётся: выбрать, что делать, и собрать всё так, чтобы оно действительно работало.</p>
+        <span class="section-label">// 02 — цикл</span>
+        <h2>Идея → промпт → <span>URL.</span></h2>
+        <p>Не «ИИ вместо меня», а «ИИ как исполнитель». Я выбираю задачу и критерии, модель пишет и собирает, я решаю, что оставить в сети.</p>
       </div>
 
       <div class="process-wrap reveal-item">
@@ -134,8 +134,8 @@ const techGroups = [
 
     <section class="upload-section upload-shell" id="lab">
       <div class="section-heading reveal-item">
-        <span class="section-label">// 03 — состояние лаборатории</span>
-        <h2>Всё, что помогает <span>двигать идею дальше.</span></h2>
+        <span class="section-label">// 03 — сейчас</span>
+        <h2>Сколько уже <span>дошло до URL.</span></h2>
       </div>
 
       <div class="stats-grid">
@@ -149,7 +149,7 @@ const techGroups = [
     <section class="upload-section upload-shell" id="stack">
       <div class="section-heading reveal-item">
         <span class="section-label">// 04 — стек</span>
-        <h2>Инструменты <span>лаборатории.</span></h2>
+        <h2>Чем это <span>собирается.</span></h2>
       </div>
 
       <div class="tech-grid">
@@ -163,14 +163,14 @@ const techGroups = [
     </section>
 
     <section class="lab-finale upload-shell reveal-item">
-      <h2>Лаборатория никогда не выглядит <span>законченной.</span></h2>
-      <p>В этом и смысл. Проекты меняются, появляются новые, старые идеи иногда собираются заново, когда находится подход получше.</p>
+      <h2>Не портфолио. <span>Журнал запусков.</span></h2>
+      <p>Новые идеи появляются, старые пересобираются. Здесь остаётся только то, что дошло до адреса и открывается в браузере.</p>
       <div class="finale-links">
-        <a href="/projects/">Все проекты ↗</a>
-        <a href="/about/">О лаборатории ↗</a>
+        <a href="/projects/">Все запуски ↗</a>
+        <a href="/about/">Как устроено ↗</a>
         <a href="https://github.com/niko009" target="_blank" rel="noreferrer">GitHub ↗</a>
       </div>
-      <div class="refine-line">research → prototype → refine</div>
+      <div class="refine-line">idea → ai → url</div>
     </section>
   </div>
 
