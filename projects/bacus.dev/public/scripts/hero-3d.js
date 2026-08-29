@@ -1,6 +1,6 @@
 /**
  * IT / programming themed Three.js hero for bacus.dev
- * — code glyph sprites, node graph, data particles
+ * Works on desktop and mobile (skips only prefers-reduced-motion).
  */
 (function () {
   function makeGlyphTexture(text, color) {
@@ -22,26 +22,28 @@
   }
 
   function initBacusHero3D() {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const coarse = window.matchMedia('(pointer: coarse)').matches;
-    if (reduce || coarse) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const canvas = document.getElementById('hero-3d-canvas');
     if (!canvas || typeof THREE === 'undefined') return;
     if (canvas.dataset.hero3dReady === '1') return;
     canvas.dataset.hero3dReady = '1';
 
+    const isMobile =
+      window.matchMedia('(max-width: 680px)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 80);
-    camera.position.set(0, 0.2, 4.0);
+    const camera = new THREE.PerspectiveCamera(isMobile ? 52 : 48, 1, 0.1, 80);
+    camera.position.set(0, 0.15, isMobile ? 4.4 : 4.0);
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
+      antialias: !isMobile,
+      powerPreference: isMobile ? 'default' : 'high-performance',
     });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2));
     renderer.setClearColor(0x000000, 0);
 
     scene.add(new THREE.AmbientLight(0x00e5cc, 0.4));
@@ -56,16 +58,15 @@
       color: 0x00e5cc,
       wireframe: true,
       transparent: true,
-      opacity: 0.28,
+      opacity: 0.32,
     });
     const matWireSoft = new THREE.MeshBasicMaterial({
       color: 0x80ffe2,
       wireframe: true,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.2,
     });
 
-    // Core structures — abstract “runtime”
     const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.7, 1), matWire);
     core.position.set(0.1, 0.15, -0.4);
     root.add(core);
@@ -75,7 +76,6 @@
     orbit.position.set(0.1, 0.1, -0.3);
     root.add(orbit);
 
-    // Node graph (like modules / services)
     const nodes = [
       [-1.6, 0.55, 0.2],
       [1.5, 0.4, 0.1],
@@ -84,7 +84,7 @@
       [0.15, 1.15, -0.2],
       [-0.3, -1.05, 0.1],
     ].map(([x, y, z], i) => {
-      const g = new THREE.SphereGeometry(0.07 + (i % 3) * 0.015, 12, 12);
+      const g = new THREE.SphereGeometry(0.07 + (i % 3) * 0.015, isMobile ? 8 : 12, isMobile ? 8 : 12);
       const m = new THREE.MeshBasicMaterial({
         color: i % 2 ? 0x00e5cc : 0x80ffe2,
         transparent: true,
@@ -96,14 +96,12 @@
       return mesh;
     });
 
-    // Edges between nodes
     const edgeMat = new THREE.LineBasicMaterial({
       color: 0x00e5cc,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.25,
     });
-    const pairs = [[0, 2], [0, 4], [1, 3], [1, 4], [2, 5], [3, 5], [0, 1], [4, 1]];
-    pairs.forEach(([a, b]) => {
+    [[0, 2], [0, 4], [1, 3], [1, 4], [2, 5], [3, 5], [0, 1], [4, 1]].forEach(([a, b]) => {
       const geo = new THREE.BufferGeometry().setFromPoints([
         nodes[a].position.clone(),
         nodes[b].position.clone(),
@@ -111,27 +109,28 @@
       root.add(new THREE.Line(geo, edgeMat));
     });
 
-    // Floating code glyphs
-    const glyphs = ['{ }', '</>', '=>', 'fn', '01', '#', ';', '[]'];
+    // Glyphs — fewer on mobile
+    const glyphs = isMobile
+      ? ['{ }', '</>', '=>', 'fn']
+      : ['{ }', '</>', '=>', 'fn', '01', '#', ';', '[]'];
     const colors = ['#00e5cc', '#80ffe2', '#a3ffd6', '#5eead4'];
     const sprites = glyphs.map((g, i) => {
       const mat = new THREE.SpriteMaterial({
         map: makeGlyphTexture(g, colors[i % colors.length]),
         transparent: true,
-        opacity: 0.55,
+        opacity: 0.6,
         depthWrite: false,
       });
       const sp = new THREE.Sprite(mat);
       const angle = (i / glyphs.length) * Math.PI * 2;
-      const r = 1.7 + (i % 3) * 0.25;
-      sp.position.set(Math.cos(angle) * r, Math.sin(angle * 1.3) * 0.85, Math.sin(angle) * 0.6 - 0.2);
-      sp.scale.set(0.55, 0.55, 1);
+      const r = 1.55 + (i % 3) * 0.2;
+      sp.position.set(Math.cos(angle) * r, Math.sin(angle * 1.3) * 0.8, Math.sin(angle) * 0.55 - 0.2);
+      sp.scale.set(isMobile ? 0.7 : 0.55, isMobile ? 0.7 : 0.55, 1);
       root.add(sp);
-      return { sp, baseY: sp.position.y, phase: i * 0.7, angle, r };
+      return { sp, baseY: sp.position.y, phase: i * 0.7 };
     });
 
-    // Data particles streaming along a ring path
-    const streamCount = 48;
+    const streamCount = isMobile ? 28 : 48;
     const streamPos = new Float32Array(streamCount * 3);
     for (let i = 0; i < streamCount; i++) {
       const t = (i / streamCount) * Math.PI * 2;
@@ -145,16 +144,15 @@
       streamGeo,
       new THREE.PointsMaterial({
         color: 0x00e5cc,
-        size: 0.04,
+        size: isMobile ? 0.05 : 0.04,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.8,
         sizeAttenuation: true,
       })
     );
     root.add(stream);
 
-    // Ambient dust
-    const dustN = 80;
+    const dustN = isMobile ? 40 : 80;
     const dustPos = new Float32Array(dustN * 3);
     for (let i = 0; i < dustN; i++) {
       dustPos[i * 3] = (Math.random() - 0.5) * 8;
@@ -193,8 +191,10 @@
     }
 
     function onPointer(e) {
-      tx = (e.clientX / window.innerWidth - 0.5) * 2;
-      ty = (e.clientY / window.innerHeight - 0.5) * 2;
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      const y = e.touches ? e.touches[0].clientY : e.clientY;
+      tx = (x / window.innerWidth - 0.5) * 2;
+      ty = (y / window.innerHeight - 0.5) * 2;
     }
 
     function animate(t) {
@@ -205,8 +205,10 @@
       mx += (tx - mx) * 0.045;
       my += (ty - my) * 0.045;
 
-      root.rotation.y = time * 0.08 + mx * 0.28;
-      root.rotation.x = Math.sin(time * 0.15) * 0.08 + my * 0.16;
+      // Auto-rotate a bit more on mobile so motion is visible without touch
+      const auto = isMobile ? 0.12 : 0.08;
+      root.rotation.y = time * auto + mx * 0.28;
+      root.rotation.x = Math.sin(time * 0.15) * 0.1 + my * 0.16;
 
       core.rotation.y = time * 0.35;
       core.rotation.x = time * 0.12;
@@ -214,10 +216,9 @@
 
       sprites.forEach((item) => {
         item.sp.position.y = item.baseY + Math.sin(time * 0.9 + item.phase) * 0.12;
-        item.sp.material.opacity = 0.4 + Math.sin(time * 1.2 + item.phase) * 0.12;
+        item.sp.material.opacity = 0.45 + Math.sin(time * 1.2 + item.phase) * 0.15;
       });
 
-      // Stream particles orbit
       const pos = stream.geometry.attributes.position.array;
       for (let i = 0; i < streamCount; i++) {
         const t0 = (i / streamCount) * Math.PI * 2 + time * 0.55;
@@ -227,12 +228,8 @@
       }
       stream.geometry.attributes.position.needsUpdate = true;
 
-      nodes.forEach((n, i) => {
-        n.position.y += Math.sin(time * 1.1 + i) * 0.0008;
-      });
-
-      camera.position.x = mx * 0.4;
-      camera.position.y = 0.2 - my * 0.22;
+      camera.position.x = mx * 0.35;
+      camera.position.y = 0.15 - my * 0.2;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
@@ -253,6 +250,7 @@
 
     window.addEventListener('resize', resize, { passive: true });
     window.addEventListener('pointermove', onPointer, { passive: true });
+    window.addEventListener('touchmove', onPointer, { passive: true });
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stop();
       else start();

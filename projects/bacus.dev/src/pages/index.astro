@@ -281,7 +281,7 @@ const techGroups = [
     @media(max-width:960px){.projects-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.process-line{display:none}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.upload-hero{min-height:700px}.hero-title{font-size:clamp(3.1rem,9vw,5.8rem)}}
     @media(max-width:680px){.upload-shell{width:calc(100% - 32px)}body:has(.upload-home) .site-header{padding-left:16px;padding-right:16px}.upload-hero{min-height:auto;padding:122px 0 80px}.hero-title{font-size:clamp(2.85rem,13vw,4.5rem)}.hero-copy{font-size:.9rem}.hero-actions>a{flex:1;justify-content:center;min-width:145px}.hero-metrics{display:grid;grid-template-columns:repeat(3,1fr)}.hero-metrics div{min-width:0;padding:10px}.scroll-cue{display:none}.upload-section{padding:72px 0}.section-heading{margin-bottom:34px}.projects-grid,.process-grid,.tech-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(2,1fr)}.project-card{min-height:300px}.lab-finale{padding:82px 0 62px}.custom-cursor{display:none}}
     @media(prefers-reduced-motion:reduce){.lab-grid,.hero-live-dot,.process-line span,.process-dot,.scroll-cue i{animation:none!important}.hero-title .word,.hero-animate,.reveal-item{opacity:1!important;filter:none!important;transform:none!important;animation:none!important;transition:none!important}.custom-cursor,.hero-3d-canvas{display:none!important}.project-card{transform:none!important}}
-    @media(max-width:680px){.hero-3d-canvas{opacity:.35}}
+    @media(max-width:680px){.hero-3d-canvas.is-ready{opacity:.85}}
   </style>
 
   <script is:inline>
@@ -391,8 +391,8 @@ const techGroups = [
         });
       }
 
-      // Load Three.js + inline hero scene (no dependency on /scripts/ path)
-      if (!reduce && !coarse && document.getElementById('hero-3d-canvas')) {
+      // Load Three.js + hero scene (desktop + mobile; skip only reduced-motion)
+      if (!reduce && document.getElementById('hero-3d-canvas')) {
         const bootHero3D = () => {
           if (typeof THREE === 'undefined') return;
           if (typeof window.initBacusHero3D === 'function') {
