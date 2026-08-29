@@ -51,20 +51,20 @@ const techGroups = [
         <span>research → prototype → refine</span>
       </div>
 
-      <h1 class="hero-title" aria-label="Довожу интересные идеи до состояния работает">
-        <span class="word">Довожу</span>
-        <span class="word">интересные</span>
-        <span class="word">идеи</span>
-        <span class="word accent-word">до состояния «работает».</span>
+      <h1 class="hero-title" aria-label="Идеи, которые можно открыть в браузере">
+        <span class="word">Идеи,</span>
+        <span class="word">которые</span>
+        <span class="word accent-word">можно открыть</span>
+        <span class="word">в браузере.</span>
       </h1>
 
       <p class="hero-copy hero-animate">
-        <strong>bacus.dev</strong> — моя личная лаборатория: небольшие продукты, автоматизация, эксперименты с ИИ и новые технологии. Без большой концепции — просто то, что хочется попробовать, понять и сделать.
+        <strong>bacus.dev</strong> — личная лаборатория: небольшие продукты, автоматизация, эксперименты с ИИ. Без громких заявлений — просто то, что интересно собрать и выложить.
       </p>
 
       <div class="hero-actions hero-animate">
         <a class="btn-primary" href="#projects">Смотреть проекты <span>↓</span></a>
-        <a class="btn-ghost" href="#lab">Что в лаборатории</a>
+        <a class="btn-ghost" href="#lab">Лаборатория</a>
       </div>
 
       <div class="hero-metrics hero-animate">
@@ -79,8 +79,8 @@ const techGroups = [
     <section class="upload-section upload-shell" id="projects">
       <div class="section-heading reveal-item">
         <span class="section-label">// 01 — проекты</span>
-        <h2>Не макеты. <span>То, что можно открыть.</span></h2>
-        <p>Что-то полезное, что-то экспериментальное, что-то меняется каждые несколько дней. Самое интересное — довести идею до реального адреса, который можно открыть.</p>
+        <h2>Живые <span>эксперименты.</span></h2>
+        <p>Что-то полезное, что-то странное, что-то пересобирается заново. У каждого эксперимента — свой адрес, который можно открыть прямо сейчас.</p>
       </div>
 
       <div class="projects-grid">
@@ -191,6 +191,43 @@ const techGroups = [
     body:has(.upload-home) .footer{background:#07070b;border-top:1px solid rgba(74,74,99,.24);color:#c8c8d8}
     body:has(.upload-home) .footer a{color:#9a9ab0}
 
+    /* Light theme — home */
+    :root[data-theme='light'] body:has(.upload-home){background:#f4f7fb;color:#111827}
+    :root[data-theme='light'] body:has(.upload-home) .site-header{background:rgba(244,247,251,.72);border-bottom-color:rgba(16,24,40,.08)}
+    :root[data-theme='light'] body:has(.upload-home) .site-header.is-scrolled{background:rgba(255,255,255,.88);border-bottom:1px solid rgba(16,24,40,.1)}
+    :root[data-theme='light'] body:has(.upload-home) .brand-word{color:#111827}
+    :root[data-theme='light'] body:has(.upload-home) .brand-word span{color:#0d9f8c}
+    :root[data-theme='light'] body:has(.upload-home) .nav a{color:#617085}
+    :root[data-theme='light'] body:has(.upload-home) .nav a:hover,:root[data-theme='light'] body:has(.upload-home) .nav a[aria-current='page']{color:#0d9f8c}
+    :root[data-theme='light'] body:has(.upload-home) .ghost{border-color:rgba(16,24,40,.12);background:rgba(255,255,255,.7);color:#334155}
+    :root[data-theme='light'] body:has(.upload-home) .footer{background:#f4f7fb;border-top-color:rgba(16,24,40,.1);color:#617085}
+    :root[data-theme='light'] body:has(.upload-home) .footer a{color:#617085}
+    :root[data-theme='light'] .upload-home{--ink:#f4f7fb;--ink-soft:#edf2f8;--panel:rgba(255,255,255,.72);--panel-hover:rgba(255,255,255,.9);--line:rgba(16,24,40,.12);--text:#111827;--muted:#617085;--dim:#94a3b8;--accent:#0d9f8c;--warn:#d97706;background:#f4f7fb;color:var(--text)}
+    :root[data-theme='light'] .lab-background{background:#f4f7fb}
+    :root[data-theme='light'] .lab-grid{background-image:linear-gradient(rgba(16,24,40,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,24,40,.04) 1px,transparent 1px)}
+    :root[data-theme='light'] .lab-vignette{background:radial-gradient(ellipse at top,transparent 0%,rgba(244,247,251,.4) 66%,#f4f7fb 100%)}
+    :root[data-theme='light'] .glow-one{background:rgba(13,159,140,.12)}
+    :root[data-theme='light'] .glow-two{background:rgba(13,159,140,.08)}
+    :root[data-theme='light'] .hero-title .word{background:linear-gradient(110deg,#111827 15%,#0d9f8c 60%,#111827);background-clip:text;-webkit-background-clip:text}
+    :root[data-theme='light'] .hero-title .accent-word{background:linear-gradient(90deg,#0d9f8c,#14b8a6);background-clip:text;-webkit-background-clip:text}
+    :root[data-theme='light'] .hero-copy{color:#617085}
+    :root[data-theme='light'] .hero-copy strong{color:#0d9f8c}
+    :root[data-theme='light'] .hero-pill{background:rgba(255,255,255,.75);border-color:rgba(16,24,40,.1);color:#617085}
+    :root[data-theme='light'] .btn-primary{background:#0d9f8c;border-color:#0d9f8c;color:#fff}
+    :root[data-theme='light'] .btn-primary:hover{background:#0f766e;box-shadow:0 0 28px rgba(13,159,140,.25)}
+    :root[data-theme='light'] .btn-ghost{border-color:rgba(16,24,40,.12);color:#334155;background:rgba(255,255,255,.6)}
+    :root[data-theme='light'] .btn-ghost:hover{border-color:rgba(13,159,140,.4);color:#0d9f8c;background:rgba(13,159,140,.06)}
+    :root[data-theme='light'] .hero-metrics div,:root[data-theme='light'] .project-card,:root[data-theme='light'] .process-card,:root[data-theme='light'] .stat-card,:root[data-theme='light'] .tech-card{background:rgba(255,255,255,.78);border-color:rgba(16,24,40,.1)}
+    :root[data-theme='light'] .project-card:hover,:root[data-theme='light'] .process-card:hover,:root[data-theme='light'] .stat-card:hover,:root[data-theme='light'] .tech-card:hover{border-color:rgba(13,159,140,.35);background:rgba(255,255,255,.95)}
+    :root[data-theme='light'] .section-label{color:rgba(13,159,140,.75)}
+    :root[data-theme='light'] .section-heading h2 span,:root[data-theme='light'] .lab-finale h2 span{background:linear-gradient(90deg,#0d9f8c,#14b8a6);background-clip:text;-webkit-background-clip:text}
+    :root[data-theme='light'] .section-heading p,:root[data-theme='light'] .project-tagline,:root[data-theme='light'] .process-card p,:root[data-theme='light'] .lab-finale p{color:#617085}
+    :root[data-theme='light'] .project-card h3,:root[data-theme='light'] .process-card h3,:root[data-theme='light'] .tech-title h3{color:#111827}
+    :root[data-theme='light'] .stat-card strong{background:linear-gradient(100deg,#111827,#0d9f8c);background-clip:text;-webkit-background-clip:text}
+    :root[data-theme='light'] .hero-3d-canvas.is-ready{opacity:.55}
+    :root[data-theme='light'] .custom-cursor{border-color:rgba(13,159,140,.45)}
+    :root[data-theme='light'] .custom-cursor i{background:#0d9f8c}
+
     .upload-home{--ink:#07070b;--ink-soft:#0e0e18;--panel:rgba(14,14,24,.58);--panel-hover:rgba(18,18,30,.74);--line:rgba(74,74,99,.38);--text:#f0f0f5;--muted:#9a9ab0;--dim:#6b6b85;--accent:#00e5cc;--warn:#ffb347;position:relative;isolation:isolate;overflow:hidden;background:#07070b;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
     .upload-shell{width:min(1152px,calc(100% - 48px));margin-inline:auto}
     .lab-background{position:fixed;inset:0;z-index:-4;overflow:hidden;pointer-events:none;background:#07070b}
@@ -207,9 +244,9 @@ const techGroups = [
     .noise::before{content:"";position:absolute;inset:0;opacity:.025;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitchTiles'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
     .hero-pill{width:max-content;display:flex;align-items:center;gap:9px;margin-bottom:30px;padding:8px 13px;border:1px solid rgba(74,74,99,.42);border-radius:999px;background:rgba(14,14,24,.58);backdrop-filter:blur(18px);color:#9a9ab0;font:500 .68rem 'JetBrains Mono',monospace;letter-spacing:.035em}
     .hero-live-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px rgba(0,229,204,.6);animation:glow-pulse 3s ease-in-out infinite}
-    .hero-title{max-width:940px;margin:0;font-family:'Space Grotesk',sans-serif;font-size:clamp(3.25rem,7.1vw,6.8rem);line-height:1.03;letter-spacing:-.062em;font-weight:700;text-wrap:balance}
-    .hero-title .word{display:inline-block;margin-right:.16em;color:transparent;background:linear-gradient(110deg,#f0f0f5,#80ffe2 62%,#f0f0f5);background-clip:text;-webkit-background-clip:text;opacity:0;filter:blur(8px);transform:translateY(30px);animation:word-in .65s cubic-bezier(.22,1,.36,1) forwards}
-    .hero-title .word:nth-child(2){animation-delay:.12s}.hero-title .word:nth-child(3){animation-delay:.24s}.hero-title .word:nth-child(4){animation-delay:.36s}
+    .hero-title{max-width:900px;margin:0;font-family:'Space Grotesk',sans-serif;font-size:clamp(2.9rem,6.4vw,5.8rem);line-height:1.08;letter-spacing:-.045em;font-weight:700;text-wrap:balance}
+    .hero-title .word{display:inline-block;margin-right:.22em;color:transparent;background:linear-gradient(110deg,#f0f0f5 20%,#c8fff4 55%,#f0f0f5);background-clip:text;-webkit-background-clip:text;opacity:0;filter:blur(8px);transform:translateY(24px);animation:word-in .65s cubic-bezier(.22,1,.36,1) forwards}
+    .hero-title .word:nth-child(2){animation-delay:.1s}.hero-title .word:nth-child(3){animation-delay:.2s}.hero-title .word:nth-child(4){animation-delay:.3s}
     .hero-title .accent-word{background:linear-gradient(90deg,#00e5cc,#80ffe2);background-clip:text;-webkit-background-clip:text}
     .hero-copy{max-width:720px;margin:32px 0 0;color:#9a9ab0;font-size:1.05rem;line-height:1.75}.hero-copy strong{color:#00e5cc;font-weight:600}
     .hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:34px}.btn-primary,.btn-ghost{min-height:48px;padding:0 21px;border-radius:12px;display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:.86rem;position:relative;transition:transform .25s cubic-bezier(.22,1,.36,1),border-color .3s ease,box-shadow .3s ease,background .3s ease;will-change:transform}.btn-primary{background:#00e5cc;color:#07070b;border:1px solid #00e5cc}.btn-primary:hover{background:#1affcb;box-shadow:0 0 34px rgba(0,229,204,.25)}.btn-ghost{border:1px solid #252538;color:#c8c8d8;background:rgba(18,18,30,.3)}.btn-ghost:hover{border-color:rgba(0,229,204,.4);color:#00e5cc;background:rgba(0,229,204,.045)}
