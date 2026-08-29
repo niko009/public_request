@@ -195,8 +195,8 @@ const techGroups = [
     .upload-shell{width:min(1152px,calc(100% - 48px));margin-inline:auto}
     .lab-background{position:fixed;inset:0;z-index:-4;overflow:hidden;pointer-events:none;background:#07070b}
     .lab-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:40px 40px;animation:grid-shift 22s linear infinite}
-    .hero-3d-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease;pointer-events:none}
-    .hero-3d-canvas.is-ready{opacity:.85}
+    .hero-3d-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1s ease;pointer-events:none;z-index:0}
+    .hero-3d-canvas.is-ready{opacity:1}
     .glow-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.72;will-change:transform}
     .glow-one{width:500px;height:500px;top:5%;left:-120px;background:rgba(0,229,204,.11)}
     .glow-two{width:430px;height:430px;right:-100px;bottom:10%;background:rgba(0,138,120,.14)}
@@ -354,28 +354,86 @@ const techGroups = [
         });
       }
 
-      // Load Three.js + hero scene (desktop / fine pointer only)
+      // Load Three.js + inline hero scene (no dependency on /scripts/ path)
       if (!reduce && !coarse && document.getElementById('hero-3d-canvas')) {
-        const loadThree = () => {
-          if (window.THREE) {
-            const s = document.createElement('script');
-            s.src = '/scripts/hero-3d.js';
-            s.defer = true;
-            document.body.appendChild(s);
+        const bootHero3D = () => {
+          if (typeof THREE === 'undefined') return;
+          if (typeof window.initBacusHero3D === 'function') {
+            window.initBacusHero3D();
             return;
           }
+          // Inline fallback scene (works even if /scripts/hero-3d.js is 404)
+          const canvas = document.getElementById('hero-3d-canvas');
+          if (!canvas || canvas.dataset.hero3dReady === '1') return;
+          canvas.dataset.hero3dReady = '1';
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+          camera.position.set(0, 0.15, 3.6);
+          const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+          renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+          renderer.setClearColor(0x000000, 0);
+          scene.add(new THREE.AmbientLight(0x00e5cc, 0.35));
+          const key = new THREE.PointLight(0x00e5cc, 2.2, 20); key.position.set(2.2, 2.4, 3.2); scene.add(key);
+          const fill = new THREE.PointLight(0x80ffe2, 0.9, 16); fill.position.set(-2.8, -0.6, 2.4); scene.add(fill);
+          const group = new THREE.Group(); scene.add(group);
+          const m1 = new THREE.MeshBasicMaterial({ color: 0x00e5cc, wireframe: true, transparent: true, opacity: 0.55 });
+          const m2 = new THREE.MeshBasicMaterial({ color: 0x80ffe2, wireframe: true, transparent: true, opacity: 0.32 });
+          const m3 = new THREE.MeshBasicMaterial({ color: 0xa3ffd6, wireframe: true, transparent: true, opacity: 0.4 });
+          const torus = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.28, 16, 64), m1); torus.position.set(-1.25, 0.25, -0.2); group.add(torus);
+          const icosa = new THREE.Mesh(new THREE.IcosahedronGeometry(0.95, 1), m2); icosa.position.set(1.45, -0.1, 0.15); group.add(icosa);
+          const octa = new THREE.Mesh(new THREE.OctahedronGeometry(0.62, 0), m3); octa.position.set(0.05, 1.05, -0.65); group.add(octa);
+          const box = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), m2); box.position.set(-0.15, -0.95, 0.45); group.add(box);
+          const ring = new THREE.Mesh(new THREE.TorusGeometry(0.55, 0.06, 12, 48), m1); ring.position.set(0.9, 0.85, -0.3); ring.rotation.x = Math.PI / 2.4; group.add(ring);
+          const n = 140, pos = new Float32Array(n * 3);
+          for (let i = 0; i < n; i++) { pos[i*3] = (Math.random()-0.5)*9; pos[i*3+1] = (Math.random()-0.5)*5.5; pos[i*3+2] = (Math.random()-0.5)*5-0.5; }
+          const pGeo = new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+          const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x00e5cc, size: 0.045, transparent: true, opacity: 0.7, sizeAttenuation: true }));
+          scene.add(particles);
+          let mx = 0, my = 0, tx = 0, ty = 0, raf = 0, running = true;
+          const resize = () => {
+            const p = canvas.parentElement || document.body;
+            const w = p.clientWidth || innerWidth, h = p.clientHeight || innerHeight;
+            camera.aspect = w / Math.max(h, 1); camera.updateProjectionMatrix(); renderer.setSize(w, h, false);
+          };
+          const onPointer = (e) => { tx = (e.clientX / innerWidth - 0.5) * 2; ty = (e.clientY / innerHeight - 0.5) * 2; };
+          const animate = (t) => {
+            if (!running) return; raf = requestAnimationFrame(animate);
+            const time = t * 0.001; mx += (tx - mx) * 0.05; my += (ty - my) * 0.05;
+            group.rotation.y = time * 0.14 + mx * 0.35; group.rotation.x = Math.sin(time * 0.2) * 0.14 + my * 0.2;
+            torus.rotation.x = time * 0.4; torus.rotation.z = time * 0.25;
+            icosa.rotation.y = -time * 0.32; icosa.rotation.x = time * 0.18;
+            octa.rotation.y = time * 0.5; box.rotation.x = time * 0.22; box.rotation.y = -time * 0.28; ring.rotation.z = time * 0.35;
+            particles.rotation.y = time * 0.05; particles.rotation.x = Math.sin(time * 0.12) * 0.06;
+            camera.position.x = mx * 0.45; camera.position.y = 0.15 - my * 0.25; camera.lookAt(0, 0, 0);
+            renderer.render(scene, camera);
+          };
+          addEventListener('resize', resize, { passive: true });
+          addEventListener('pointermove', onPointer, { passive: true });
+          document.addEventListener('visibilitychange', () => { if (document.hidden) { running = false; cancelAnimationFrame(raf); } else { running = true; resize(); raf = requestAnimationFrame(animate); } });
+          resize(); raf = requestAnimationFrame(animate); canvas.classList.add('is-ready');
+        };
+
+        const loadThree = () => {
+          if (window.THREE) { bootHero3D(); return; }
           const three = document.createElement('script');
-          three.src = 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.min.js';
+          // 0.160 still ships UMD three.min.js (0.170+ path breaks)
+          three.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+          three.crossOrigin = 'anonymous';
           three.onload = () => {
+            // Prefer external script if available, else inline fallback
             const s = document.createElement('script');
             s.src = '/scripts/hero-3d.js';
-            s.defer = true;
+            s.onload = () => bootHero3D();
+            s.onerror = () => bootHero3D();
             document.body.appendChild(s);
+            // Safety timeout if script hangs
+            setTimeout(bootHero3D, 1200);
           };
+          three.onerror = () => console.warn('[bacus] Three.js CDN failed');
           document.head.appendChild(three);
         };
-        if ('requestIdleCallback' in window) requestIdleCallback(loadThree, { timeout: 1800 });
-        else setTimeout(loadThree, 600);
+        if ('requestIdleCallback' in window) requestIdleCallback(loadThree, { timeout: 1200 });
+        else setTimeout(loadThree, 400);
       }
     })();
   </script>
