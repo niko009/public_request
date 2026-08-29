@@ -10,7 +10,7 @@ const {
 } = Astro.props;
 
 // Production version: increment this for every published site change.
-const siteVersion = '0.4.1';
+const siteVersion = '0.4.4';
 const versionedLogo = `/logo-mark.svg?v=${siteVersion}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url.origin);
